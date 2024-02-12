@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <link rel="icon" type="image/png" sizes="32x32" href="">
+
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <title>Chat illustration</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="avatar">
+        <img src="/static/images/haneefa_thilakkam.jpg" alt="Avatar">
+      </div>
+      <div class="user-info">
+        <div class="name">C.N ദാമു </div>
+        <div class="status">Available to Work</div>
+      </div>
+      <div class="dots"></div>
+    </div>
+    <div class="messages">
+      <div class="message received">
+        Welcome to the chat! Please enter your prompt:
+      </div>
+      <div class="message sent input-container">
+        <input type="text" id="promptInput" placeholder="Enter your prompt...">
+        <button onclick="submitPrompt()">Submit</button>
+      </div>
+      <div class="message received" id="imageContainer"></div>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
