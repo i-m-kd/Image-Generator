@@ -1,8 +1,12 @@
 function submitPrompt() {
-  // Get the user input from the input field
   var prompt = document.getElementById('promptInput').value;
 
-  // Send a POST request to the Flask API endpoint
+  const validationResult = validatePrompt(prompt)
+  if(!validationResult.isValid) {
+    alert(validationResult.message);
+    return;
+  }
+
   fetch('/', {
     method: 'POST',
     headers: {
@@ -14,7 +18,6 @@ function submitPrompt() {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    // Parse response as JSON
     return response.json();
   })
   .then(data => {
@@ -34,4 +37,17 @@ function submitPrompt() {
 function displayImage(imageUrl) {
   var imageContainer = document.getElementById('imageContainer');
   imageContainer.innerHTML = '<img src="' + imageUrl + '" alt="Generated Image">';
+}
+
+function validatePrompt(prompt) {
+  if(!prompt) {
+    return { isValid: false, message: "Prompt cannot be empty !!" };
+  }
+  if (prompt.length > 256) {
+    return { isValid: false, message: "Prompt is too long. Maximum allowed characters: 256 !!" };
+  }
+  if (!/^[a-zA-Z]+$/.test(prompt)) {
+    return { isValid: false, message: "Prompt must only contain alphabets for now !!" };
+  }
+  return { isValid: true}
 }
