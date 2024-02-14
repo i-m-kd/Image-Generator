@@ -7,7 +7,7 @@ function submitPrompt() {
     return;
   }
 
-  fetch('/', {
+  fetch('/generate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -22,10 +22,10 @@ function submitPrompt() {
   })
   .then(data => {
     // Get the URL of the generated image from the response data
-    var imageUrl = data.image_url;
+    var taskId = data.task_id;
+    checkTaskStatus(taskId)
     
-    // Display the generated image in the chat box
-    displayImage(imageUrl);
+  
   })
   .catch(error => {
     console.error('Error:', error);
@@ -50,4 +50,22 @@ function validatePrompt(prompt) {
     return { isValid: false, message: "Prompt must only contain alphabets for now !!" };
   }
   return { isValid: true}
+}
+
+function checkTaskStatus(taskId) {
+  fetch(`/status/${taskId}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.state === 'SUCCESS') {
+        // Task completed successfully, display the image
+        displayImage(data.result); // Assuming `result` is the image URL
+      } else if (data.state === 'PENDING') {
+        // Task is still pending, check again after a delay
+        setTimeout(() => checkTaskStatus(taskId), 2000); // Poll every 2 seconds
+      } else {
+        // Handle failure or other task states
+        alert('An error occurred: ' + data.status);
+      }
+    })
+    .catch(error => console.error('Error checking task status:', error));
 }
