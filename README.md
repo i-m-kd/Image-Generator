@@ -1,6 +1,6 @@
 # Trying to generate image from text 
 
-- Deep learning model used is ==Stable Diffusion== 
+- Deep learning model used is Stable Diffusion 
 
 #### Diffusion model
 : Diffusion Models are generative models, meaning that they are used to generate data similar to the data on which they are trained.
